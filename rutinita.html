@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <link rel="apple-touch-icon" href="icon-180.png">
+  <title>Rutina de Hipertrofia — 6 días (Personalizada)</title>
+  <meta name="theme-color" content="#0f0f12" />
+  <style>
+    :root{
+      --bg:#0f0f12; --elev:#17171c; --card:#1f2026; --ink:#e8ecf1; --muted:#a9b0bc;
+      --brand:#7bdcff; --brand-2:#a3ff85; --warn:#ffba53; --accent:#b495ff; --danger:#ff6b6b;
+      --ok:#72e6a6; --line:#2a2c36; --halo:0 10px 30px rgba(0,0,0,.55);
+      --radius:14px; --radius-sm:10px; --shadow:0 8px 24px rgba(0,0,0,.35);
+      --font: ui-sans-serif, -apple-system, Segoe UI, Roboto, Inter, "SF Pro Text", system-ui, Arial, sans-serif;
+      --mono: ui-monospace, SFMono-Regular, Menlo, Consolas, "Liberation Mono", monospace;
+    }
+    *{box-sizing:border-box} html,body{height:100%}
+    body{margin:0;background:linear-gradient(180deg,#0f0f12,#0b0b0e);color:var(--ink);font:15px/1.4 var(--font);-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+    header{
+      position:sticky;top:0;z-index:50;backdrop-filter:saturate(1.2) blur(10px);
+      background:rgba(15,15,18,.75);border-bottom:1px solid var(--line)
+    }
+    .wrap{max-width:1080px;margin:0 auto;padding:18px 16px}
+    .title{display:flex;align-items:center;gap:12px}
+    .badge{padding:6px 10px;border-radius:999px;background:linear-gradient(135deg,var(--brand),var(--accent));color:#061014;font-weight:700;font-size:12px}
+    h1{font-size:20px;margin:0}
+    .subtitle{color:var(--muted);font-size:13px;margin-top:6px}
+    .quick{
+      display:grid;grid-template-columns:1fr auto auto;gap:10px;margin-top:14px;align-items:center
+    }
+    .day-tabs{
+      display:grid;grid-template-columns:repeat(7,1fr);gap:8px
+    }
+    .tab{padding:10px 8px;border-radius:10px;background:var(--elev);border:1px solid var(--line);
+      text-align:center;color:var(--ink);cursor:pointer;user-select:none;transition:.2s}
+    .tab.active{outline:2px solid var(--brand);box-shadow:0 0 0 6px rgba(123,220,255,.08) inset}
+    .actions{display:flex;gap:8px}
+    .btn{
+      padding:10px 12px;border-radius:10px;border:1px solid var(--line);background:var(--elev);
+      color:var(--ink);cursor:pointer;font-weight:600;transition:.2s
+    }
+    .btn:hover{filter:brightness(1.08)}
+    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:18px}
+    @media (max-width:900px){.grid{grid-template-columns:1fr}}
+    .card{
+      background:linear-gradient(180deg,#1b1c22,#17171c);border:1px solid var(--line);
+      border-radius:var(--radius);box-shadow:var(--shadow);padding:16px
+    }
+    h2{margin:0 0 10px;font-size:18px}
+    h3{margin:18px 0 8px;font-size:15px;color:var(--brand)}
+    .chip{display:inline-flex;align-items:center;gap:6px;padding:6px 10px;border:1px solid var(--line);
+      border-radius:999px;background:var(--elev);color:var(--muted);font-weight:600;font-size:12px}
+    .plan-note{margin:10px 0;color:var(--muted);font-size:13px}
+    .exercise{border:1px solid var(--line);border-radius:12px;padding:12px;margin:10px 0;background:var(--card)}
+    .head{display:flex;justify-content:space-between;gap:10px;align-items:center}
+    .name{font-weight:800;font-size:16px}
+    .meta{display:flex;gap:8px;flex-wrap:wrap}
+    .pill{padding:4px 8px;border-radius:999px;font-weight:700;font-size:12px;color:#091015}
+    .p-rir{background:linear-gradient(135deg,var(--warn),#ffd37f)}
+    .p-rep{background:linear-gradient(135deg,var(--brand-2),#e0ffcf)}
+    .p-rest{background:linear-gradient(135deg,#b2b7ff,#d4ccff)}
+    .sets{display:grid;grid-template-columns:repeat(6,1fr);gap:6px;margin-top:10px}
+    @media (max-width:520px){.sets{grid-template-columns:repeat(3,1fr)}}
+    .set{
+      padding:10px;border-radius:10px;border:1px dashed var(--line);text-align:center;
+      cursor:pointer;user-select:none;background:#191a20
+    }
+    .set.done{background:linear-gradient(180deg,#152018,#0e1711);border-color:#1d3525}
+    .set small{display:block;color:var(--muted);font-size:11px;margin-top:4px}
+    .row{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
+    .timer{
+      display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line);
+      padding:8px 10px;border-radius:10px;background:#14161b;font-variant-numeric:tabular-nums
+    }
+    .timer b{font-family:var(--mono);font-size:14px}
+    .alt{margin-top:8px;color:var(--muted);font-size:12px}
+    details{border:1px solid var(--line);border-radius:12px;padding:10px;background:#16171d;margin-top:10px}
+    details summary{cursor:pointer;font-weight:700}
+    .warn{color:#ffd37f}
+    .danger{color:var(--danger)}
+    /* right column */
+    .sticky{position:sticky;top:86px}
+    .panel{display:grid;gap:12px}
+    .knee{display:grid;gap:8px}
+    input[type="range"]{width:100%}
+    textarea{
+      width:100%;min-height:100px;background:#14161b;color:var(--ink);border:1px solid var(--line);
+      border-radius:10px;padding:10px;font-family:var(--mono)
+    }
+    .legend{display:flex;gap:8px;flex-wrap:wrap}
+    .legend .chip b{color:var(--ink)}
+    .footer{color:var(--muted);font-size:12px;opacity:.9}
+    .small{font-size:12px;color:var(--muted)}
+    .today{outline:2px solid var(--accent);box-shadow:0 0 0 6px rgba(180,149,255,.08) inset}
+    .ghost{opacity:.7}
+  </style>
+</head>
+<body>
+<header>
+  <div class="wrap">
+    <div class="title">
+      <span class="badge">Rutina de Hipertrofia — 6 días</span>
+      <h1>Plan personalizado para ponerte muy grande</h1>
+    </div>
+    <div class="subtitle">Usuario: 78&nbsp;kg · 1.78&nbsp;m · 6 meses objetivo · Prioridad: Cuádriceps &amp; Gemelos · Hombros/Tríceps en mantenimiento · Rodilla izq. sensible</div>
+    <div class="quick">
+      <div class="day-tabs" id="tabs">
+        <div class="tab" data-day="0">L • Push A</div>
+        <div class="tab" data-day="1">M • Pull A</div>
+        <div class="tab" data-day="2">X • Pierna A</div>
+        <div class="tab" data-day="3">J • Push B</div>
+        <div class="tab" data-day="4">V • Pull B</div>
+        <div class="tab" data-day="5">S • Pierna B</div>
+        <div class="tab" data-day="6">D • Descanso</div>
+      </div>
+      <div class="actions">
+        <button class="btn" id="toggleTheme">🌗 Tema</button>
+        <button class="btn" id="resetDay">↺ Reset día</button>
+      </div>
+      <div class="chip">Rango RIR de trabajo: <b>compuestos 2–1 · accesorios 1–0</b></div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap grid">
+  <!-- LEFT: WORKOUTS -->
+  <section id="workouts">
+    <!-- Push A -->
+    <article class="card day" data-day="0">
+      <h2>Push A · Pecho dominante <span class="small">Delts/Tríceps: mantenimiento</span></h2>
+      <div class="legend">
+        <span class="chip"><b>Meta</b>&nbsp;ganar masa de pecho</span>
+        <span class="chip">Descansos compuestos 2–3 min</span>
+        <span class="chip">Accesorios 60–90 s</span>
+      </div>
+      <p class="plan-note">Doble progresión en 5–8 y 8–12 rep. Cuando alcances el tope con el RIR prescrito en todas las series dos sesiones seguidas, sube 2.5–5% la carga.</p>
+
+      <!-- EXERCISES -->
+      <div class="exercise" data-ex="banca">
+        <div class="head">
+          <div class="name">Press banca barra (agarre medio)</div>
+          <div class="meta">
+            <span class="pill p-rep">3×5–8</span>
+            <span class="pill p-rir">RIR 2</span>
+            <span class="pill p-rest">Descanso 2–3′</span>
+          </div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row">
+          <div class="timer" data-min="2" data-max="3"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div>
+          <button class="btn addset">+ Serie</button>
+          <button class="btn delset ghost">– Serie</button>
+        </div>
+      </div>
+
+      <div class="exercise" data-ex="inclinado">
+        <div class="head"><div class="name">Press inclinado mancuernas</div>
+          <div class="meta"><span class="pill p-rep">3×8–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div> <button class="btn addset">+ Serie</button> <button class="btn delset ghost">– Serie</button></div>
+      </div>
+
+      <div class="exercise" data-ex="convergente">
+        <div class="head"><div class="name">Press máquina convergente</div>
+          <div class="meta"><span class="pill p-rep">3×10–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">75–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1.25" data-max="1.5"><b>01:15</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="aperturas">
+        <div class="head"><div class="name">Aperturas en cable (alto→bajo)</div>
+          <div class="meta"><span class="pill p-rep">2×12–15</span><span class="pill p-rir">RIR 0–1</span><span class="pill p-rest">60–75″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.25"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="triceps">
+        <div class="head"><div class="name">Extensión de tríceps en cuerda</div>
+          <div class="meta"><span class="pill p-rep">2×12–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–75″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.25"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+    </article>
+
+    <!-- Pull A -->
+    <article class="card day" data-day="1">
+      <h2>Pull A · Ancho dorsal + Bíceps <span class="small">+ Gemelos</span></h2>
+      <div class="legend">
+        <span class="chip"><b>Meta</b>&nbsp;dorsal amplio y bíceps</span>
+        <span class="chip">Face pull/Rears otro día</span>
+      </div>
+      <div class="exercise" data-ex="dominadas">
+        <div class="head"><div class="name">Dominadas lastradas / asistidas</div>
+          <div class="meta"><span class="pill p-rep">4×6–8</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">2–3′</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="2" data-max="3"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div> <button class="btn addset">+ Serie</button> <button class="btn delset ghost">– Serie</button></div>
+        <details class="alt"><summary>Consejos</summary>Controla excéntrica 2–3 s, barbilla por encima de la barra, sin balanceo.</details>
+      </div>
+
+      <div class="exercise" data-ex="jalon">
+        <div class="head"><div class="name">Jalón neutro (polea)</div>
+          <div class="meta"><span class="pill p-rep">3×8–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="pullover">
+        <div class="head"><div class="name">Pullover en polea</div>
+          <div class="meta"><span class="pill p-rep">2×12–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–75″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.25"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="curl-barra">
+        <div class="head"><div class="name">Curl con barra</div>
+          <div class="meta"><span class="pill p-rep">3×6–10</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="curl-incl">
+        <div class="head"><div class="name">Curl inclinado (mancuernas)</div>
+          <div class="meta"><span class="pill p-rep">2×10–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="calf-recto">
+        <div class="head"><div class="name">Gemelos de pie (gastrocnemio, pausa abajo)</div>
+          <div class="meta"><span class="pill p-rep">4×8–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+    </article>
+
+    <!-- Pierna A -->
+    <article class="card day" data-day="2">
+      <h2>Pierna/Glúteo A · Dominante cadera + Cuádriceps sin dolor</h2>
+      <div class="legend">
+        <span class="chip"><b>Meta</b>&nbsp;isquios y glúteo potentes; cuádriceps seguro</span>
+        <span class="chip">Registra dolor rodilla 0–10 post sesión</span>
+      </div>
+
+      <div class="exercise" data-ex="rdl">
+        <div class="head"><div class="name">Peso muerto rumano</div>
+          <div class="meta"><span class="pill p-rep">3×6–10</span><span class="pill p-rir">RIR 2</span><span class="pill p-rest">2–3′</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="2" data-max="3"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="hip">
+        <div class="head"><div class="name">Hip thrust con barra</div>
+          <div class="meta"><span class="pill p-rep">4×6–10</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">2′</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="2" data-max="2"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="prensa">
+        <div class="head"><div class="name">Prensa 45° (ROM tolerado)</div>
+          <div class="meta"><span class="pill p-rep">4×10–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div></div>
+        <details class="alt"><summary>Si molesta</summary>Pies un poco más altos y anchos; reduce profundidad. Alternativa: step-up bajo o split squat con cinturón.</details>
+      </div>
+
+      <div class="exercise" data-ex="ext">
+        <div class="head"><div class="name">Extensión de rodilla (isométrico 3 s medio)</div>
+          <div class="meta"><span class="pill p-rep">3×12–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="curl-tum">
+        <div class="head"><div class="name">Curl femoral tumbado</div>
+          <div class="meta"><span class="pill p-rep">3×8–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <details class="alt"><summary>Opcional (si hay trineo)</summary>Sled drag hacia atrás 3×20–30 m @RPE 7</details>
+    </article>
+
+    <!-- Push B -->
+    <article class="card day" data-day="3">
+      <h2>Push B · Hombro &amp; Tríceps (mantenimiento)</h2>
+      <div class="exercise" data-ex="militar">
+        <div class="head"><div class="name">Press militar sentado (mancuernas)</div>
+          <div class="meta"><span class="pill p-rep">2×6–10</span><span class="pill p-rir">RIR 2</span><span class="pill p-rest">2′</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="2" data-max="2"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="lateral">
+        <div class="head"><div class="name">Elevación lateral (últimas 3 reps parciales largas)</div>
+          <div class="meta"><span class="pill p-rep">2×12–20</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="peck">
+        <div class="head"><div class="name">Peck-deck</div>
+          <div class="meta"><span class="pill p-rep">2×10–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="cerrado">
+        <div class="head"><div class="name">Press banca agarre cerrado (Smith)</div>
+          <div class="meta"><span class="pill p-rep">2×8–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="triceps-ez">
+        <div class="head"><div class="name">Extensión de tríceps barra EZ</div>
+          <div class="meta"><span class="pill p-rep">2×10–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+    </article>
+
+    <!-- Pull B -->
+    <article class="card day" data-day="4">
+      <h2>Pull B · Espesor + Bíceps <span class="small">+ Gemelos</span></h2>
+
+      <div class="exercise" data-ex="remo-t">
+        <div class="head"><div class="name">Remo T con apoyo de pecho</div>
+          <div class="meta"><span class="pill p-rep">4×6–10</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">2′</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="2" data-max="2"><b>02:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="remo-cable">
+        <div class="head"><div class="name">Remo en cable agarre neutro</div>
+          <div class="meta"><span class="pill p-rep">3×8–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="reverse">
+        <div class="head"><div class="name">Reverse fly (posterior)</div>
+          <div class="meta"><span class="pill p-rep">3×15–20</span><span class="pill p-rir">RIR 0–1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="martillo">
+        <div class="head"><div class="name">Curl martillo</div>
+          <div class="meta"><span class="pill p-rep">2×8–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="2"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="calf-sentado">
+        <div class="head"><div class="name">Gemelos sentado (sóleo) + estiramiento cargado 30–40″</div>
+          <div class="meta"><span class="pill p-rep">4×10–20</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+    </article>
+
+    <!-- Pierna B -->
+    <article class="card day" data-day="5">
+      <h2>Pierna/Glúteo B · Cuádriceps + Isquios <span class="small">+ Gemelos</span></h2>
+
+      <div class="exercise" data-ex="hack">
+        <div class="head"><div class="name">Hack squat / Pendulum (ROM parcial cómodo)</div>
+          <div class="meta"><span class="pill p-rep">4×8–12</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="4"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div>
+        <details class="alt"><summary>Alternativas</summary>Step-up bajo o split squat con cinturón si aparece molestia.</details>
+        </div>
+      </div>
+
+      <div class="exercise" data-ex="prensa-baja">
+        <div class="head"><div class="name">Prensa 45° (pies más bajos si se tolera)</div>
+          <div class="meta"><span class="pill p-rep">3×10–15</span><span class="pill p-rir">RIR 1–2</span><span class="pill p-rest">90–120″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1.5" data-max="2"><b>01:30</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="ext-15">
+        <div class="head"><div class="name">Extensión de rodilla — 1.5 reps</div>
+          <div class="meta"><span class="pill p-rep">3×12–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="curl-sentado">
+        <div class="head"><div class="name">Curl femoral sentado</div>
+          <div class="meta"><span class="pill p-rep">3×10–15</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+
+      <div class="exercise" data-ex="calf-recto2">
+        <div class="head"><div class="name">Gemelos de pie (pausa abajo)</div>
+          <div class="meta"><span class="pill p-rep">3×8–12</span><span class="pill p-rir">RIR 1</span><span class="pill p-rest">60–90″</span></div>
+        </div>
+        <div class="sets" data-default="3"></div>
+        <div class="row"><div class="timer" data-min="1" data-max="1.5"><b>01:00</b> <button class="btn btn-mini">▶︎</button></div></div>
+      </div>
+    </article>
+
+    <!-- Descanso -->
+    <article class="card day" data-day="6">
+      <h2>Domingo · Descanso activo</h2>
+      <p class="plan-note">10–20 min de movilidad y paseo. Si te apetece, 2–3 series ligeras de elevación de gemelos a una pierna (20–30 rep, sin llegar al fallo).</p>
+    </article>
+  </section>
+
+  <!-- RIGHT: PANELS -->
+  <aside class="panel sticky">
+    <section class="card">
+      <h2>Progresión del Mesociclo (6+1)</h2>
+      <ul class="small">
+        <li><b>Sem 1–2</b> volumen base.</li>
+        <li><b>Sem 3</b> si todo va fluido, añade <b>+1 serie</b> a cuádriceps y gemelos.</li>
+        <li><b>Sem 5</b> repite aumento si <b>dolor ≤3/10</b> y rendimiento estable.</li>
+        <li><b>Sem 6 (Deload)</b> reduce volumen un <b>40–50%</b> y sube RIR +1–2.</li>
+      </ul>
+      <div class="row">
+        <label class="chip">Semana actual:
+          <select id="week" style="background:#121319;color:var(--ink);border:1px solid var(--line);border-radius:8px;padding:6px 8px;margin-left:6px">
+            <option>1</option><option>2</option><option>3</option><option>4</option><option>5</option><option>6 · Deload</option>
+          </select>
+        </label>
+        <span class="chip" id="weekHint">Sigue el plan base.</span>
+      </div>
+    </section>
+
+    <section class="card knee">
+      <h2>Rodilla — Preparación rápida (8–10′)</h2>
+      <ol class="small">
+        <li>Isométricos de extensión a ~60°: 3×20–30″</li>
+        <li>TKE (extensión terminal con banda): 2×15–20</li>
+        <li>Trineo hacia atrás (si hay): 2×20 m</li>
+        <li>Movilidad de tobillo (rodilla sobre punta): 2×10–15</li>
+      </ol>
+      <label class="chip" style="display:block;margin-top:8px">
+        Dolor hoy: <b id="painVal">0</b>/10
+      </label>
+      <input id="pain" type="range" min="0" max="10" step="1" value="0">
+      <div class="small">Si ≥4/10 o dura &gt;24 h: recorta series/carga o cambia variante.</div>
+    </section>
+
+    <section class="card">
+      <h2>Guía RIR / Técnica</h2>
+      <div class="small">
+        <b>RIR 2:</b> quedan ~2 reps en reserva. <b>RIR 1:</b> última rep dura pero controlada. <b>RIR 0:</b> fallo técnico.  
+        En todos: excéntrica controlada (2–3 s), pausa 1 s abajo en gemelos.  
+        Descansos: compuestos 2–3′; accesorios 60–90″.
+      </div>
+      <div class="row" style="margin-top:8px">
+        <button class="btn" id="completeDay">✔ Marcar día como completado</button>
+        <span class="chip" id="dayState">Pendiente</span>
+      </div>
+    </section>
+
+    <section class="card">
+      <h2>Notas rápidas</h2>
+      <textarea id="notes" placeholder="Sensaciones, cargas, RIR real, ajustes…"></textarea>
+    </section>
+
+    <section class="footer">
+      <p>Diseño minimalista para uso en gimnasio. Todo se guarda en este dispositivo (localStorage). No incluye nutrición.</p>
+    </section>
+  </aside>
+</main>
+
+<script>
+(function(){
+  const $ = (q,el=document)=>el.querySelector(q);
+  const $$ = (q,el=document)=>[...el.querySelectorAll(q)];
+  const stateKey = 'rutina-hipertrofia-v3';
+  const state = JSON.parse(localStorage.getItem(stateKey)||'{}');
+
+  const today = new Date();
+  const dow = (d=>[1,2,3,4,5,6,0][d])(today.getDay()); // map to L..D (Mon=1)
+  const tabs = $('#tabs');
+  const dayCards = $$('.day');
+  const weekSel = $('#week');
+  const weekHint = $('#weekHint');
+  const notes = $('#notes');
+  const pain = $('#pain');
+  const painVal = $('#painVal');
+  const dayState = $('#dayState');
+
+  // Build sets UI
+  dayCards.forEach(card=>{
+    $$('.exercise',card).forEach(ex=>{
+      const setsWrap = $('.sets',ex);
+      const def = +setsWrap.dataset.default || 3;
+      const id = getExKey(card, ex);
+      const doneArr = (state.sets && state.sets[id]) || Array(def).fill(false);
+      renderSets(setsWrap, doneArr, id);
+
+      const t = $('.timer', ex);
+      if(t){
+        const min = parseFloat(t.dataset.min||'2');
+        const max = parseFloat(t.dataset.max||min);
+        const display = $('b',t);
+        const btn = $('button',t);
+        let running=false, left=0, iv=null;
+
+        function fmt(s){const m=Math.floor(s/60), r=String(Math.floor(s%60)).padStart(2,'0'); return `${String(m).padStart(2,'0')}:${r}`}
+        function start(){
+          left = Math.round(min*60);
+          running=true; btn.textContent='⏸'; tick();
+          iv=setInterval(tick,1000);
+        }
+        function tick(){
+          display.textContent=fmt(left);
+          if(left<=0){ stop(); display.textContent=fmt(max*60); vibe(); }
+          left--;
+        }
+        function stop(){ running=false; clearInterval(iv); btn.textContent='▶︎'; }
+        btn.addEventListener('click',()=> running?stop():start());
+        display.textContent = fmt(min*60);
+      }
+
+      const add = $('.addset', ex);
+      const del = $('.delset', ex);
+      if(add){
+        add.addEventListener('click',()=>{
+          const current = getSets(id);
+          current.push(false);
+          saveSets(id,current); renderSets(setsWrap,current,id);
+          del.classList.remove('ghost');
+        });
+      }
+      if(del){
+        if(((state.sets&&state.sets[id])||[]).length<= (setsWrap.dataset.default||2)) del.classList.add('ghost');
+        del.addEventListener('click',()=>{
+          const base = +setsWrap.dataset.default||2;
+          const current = getSets(id);
+          if(current.length>base){
+            current.pop(); saveSets(id,current); renderSets(setsWrap,current,id);
+            if(current.length<=base) del.classList.add('ghost');
+          }
+        });
+      }
+    });
+  });
+
+  // Tabs, select today
+  $$('.tab',tabs).forEach(t=>{
+    t.addEventListener('click',()=>activateTab(+t.dataset.day));
+  });
+  activateTab(dow); // open today's
+
+  // Theme toggle
+  const themeBtn=$('#toggleTheme');
+  if(!state.theme) state.theme = (window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'dark');
+  applyTheme(state.theme);
+  themeBtn.addEventListener('click',()=>{
+    state.theme = state.theme==='dark'?'light':'dark';
+    applyTheme(state.theme); save();
+  });
+
+  // Reset day
+  $('#resetDay').addEventListener('click',resetCurrentDay);
+
+  // Week selector
+  if(state.week) weekSel.value=state.week;
+  applyWeekHint();
+  weekSel.addEventListener('change',()=>{
+    state.week = weekSel.value; save(); applyWeekHint();
+  });
+
+  // Notes
+  notes.value = state.notes || '';
+  notes.addEventListener('input',()=>{ state.notes = notes.value; save(); });
+
+  // Pain slider
+  pain.value = state.pain || 0; painVal.textContent=pain.value;
+  pain.addEventListener('input',()=>{state.pain=+pain.value; painVal.textContent=state.pain; save();})
+
+  // Day completed
+  applyDayState();
+  $('#completeDay').addEventListener('click',()=>{
+    const d=currentDay();
+    state.done = state.done || {}; state.done[d]= (state.done[d]?false:true);
+    save(); applyDayState();
+  });
+
+  // Helpers
+  function getExKey(card, ex){ return `${card.dataset.day}:${ex.dataset.ex}` }
+  function getSets(id){ state.sets = state.sets||{}; return (state.sets[id]||[]).slice(); }
+  function saveSets(id, arr){ state.sets = state.sets||{}; state.sets[id]=arr; save(); }
+  function renderSets(setsWrap, arr, id){
+    setsWrap.innerHTML='';
+    arr.forEach((val,i)=>{
+      const b=document.createElement('button');
+      b.className='set'+(val?' done':''); b.innerHTML=`S${i+1}<small>${val?'OK':'toca'}</small>`;
+      b.addEventListener('click',()=>{
+        const now=getSets(id); now[i]=!now[i]; saveSets(id,now); renderSets(setsWrap,now,id);
+      });
+      setsWrap.appendChild(b);
+    });
+  }
+  function activateTab(idx){
+    $$('.tab',tabs).forEach(t=>t.classList.remove('active'));
+    const tab = $(`.tab[data-day="${idx}"]`, tabs);
+    if(tab) tab.classList.add('active');
+    dayCards.forEach(c=>c.style.display = (+c.dataset.day===idx)?'block':'none');
+    // style today's tab
+    $$('.tab',tabs).forEach(t=>t.classList.remove('today'));
+    const todayIdx = dow; if(+tab.dataset.day===todayIdx) tab.classList.add('today');
+    // load notes scoped by day (optional simple global note retained)
+  }
+  function currentDay(){ const t=$('.tab.active',tabs); return t?+t.dataset.day:0; }
+  function resetCurrentDay(){
+    const d=currentDay();
+    // reset sets for this day's exercises
+    $(`article.day[data-day="${d}"]`) && $$(`article.day[data-day="${d}"] .exercise`).forEach(ex=>{
+      const setsWrap = $('.sets',ex);
+      const id=getExKey($(`article.day[data-day="${d}"]`), ex);
+      const def=+setsWrap.dataset.default||3;
+      const arr=Array(def).fill(false);
+      saveSets(id,arr); renderSets(setsWrap,arr,id);
+    });
+    // unmark day done
+    state.done = state.done||{}; state.done[d]=false; save();
+    applyDayState();
+  }
+  function applyDayState(){
+    const d=currentDay(); const done = state.done && state.done[d];
+    dayState.textContent = done?'Completado ✅':'Pendiente';
+    dayState.style.color = done?'var(--ok)':'var(--muted)';
+  }
+  function applyTheme(th){
+    document.documentElement.style.colorScheme = th==='dark'?'dark':'light';
+    if(th==='light'){
+      document.documentElement.style.setProperty('--bg','#f7f7fb');
+      document.documentElement.style.setProperty('--elev','#ffffff');
+      document.documentElement.style.setProperty('--card','#ffffff');
+      document.documentElement.style.setProperty('--ink','#111317');
+      document.documentElement.style.setProperty('--muted','#5a6270');
+      document.documentElement.style.setProperty('--line','#e6e8ef');
+    }else{
+      document.documentElement.style.setProperty('--bg','#0f0f12');
+      document.documentElement.style.setProperty('--elev','#17171c');
+      document.documentElement.style.setProperty('--card','#1f2026');
+      document.documentElement.style.setProperty('--ink','#e8ecf1');
+      document.documentElement.style.setProperty('--muted','#a9b0bc');
+      document.documentElement.style.setProperty('--line','#2a2c36');
+    }
+  }
+  function applyWeekHint(){
+    const w = weekSel.value;
+    if(w==='3' || w==='5'){ weekHint.textContent='Añade +1 serie a cuádriceps y gemelos si el rendimiento se mantiene.'; weekHint.style.color='var(--brand-2)'; }
+    else if(w.startsWith('6')){ weekHint.textContent='DELOAD: -40–50% del volumen y +1–2 RIR.'; weekHint.style.color='var(--warn)'; }
+    else { weekHint.textContent='Sigue el plan base.'; weekHint.style.color='var(--muted)'; }
+  }
+  function save(){ localStorage.setItem(stateKey, JSON.stringify(state)); }
+  function vibe(){ if('vibrate' in navigator) navigator.vibrate([40,60,40]); }
+})();
+</script>
+</body>
+</html>
